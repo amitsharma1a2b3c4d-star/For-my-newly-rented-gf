@@ -3,6 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Emergency Update ⚠️</title>
+    <style>
+        body {
+            background-color: #0d0221;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #setup, #finale {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 2px solid #ff4d6d;
+            width: 350px;
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.3);
+            z-index: 10;
+        }
+
+        #finale { display: none; border-color: #00ff00; }
+
+        .pfp {
+            width: 180px;
+            height: 250px;
+            border-radius: 15px;
+            border: 4px solid #ff00ff;
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .meter {
+            height: 12px;
+            background: #222;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4d6d, #ff00ff);
+            transition: width 0.3s ease;
+        }
+
+        .btn-group {
+            position: relative;
+            height: 120px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        #yesBtn { background: #ff4d6d; color: white; width: 100%; }
+        
+        #noBtn { 
+            background: #555; 
+            color: #ccc; 
+            position: absolute; 
+            bottom: 0; 
+            left: 50%; 
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .falling-emoji {
+            position: absolute;
+            top: -50px;
+            animation: fall linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="funny_song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="setup">
+        <h1 style="color: #ff4d6d; margin: 0;">VALENTINE ERROR 💔</h1>
+        <p style="font-size: 0.9rem; color: #aaa;">User Detected: <b>DIVYANSHU</b><br>
+        Status: <b>SINGLE (CRITICAL LEVEL)</b></p>
+        
+        <div class="meter"><div class="fill" id="meterFill"></div></div>
+        <p id="status-text" style="font-size: 14px;">Initiating "Emergency GF" Protocol...</p>
+
+        <div class="btn-group">
+            <button id="yesBtn" onclick="startPrank()">I ACCEPT MY FATE 💅</button>
+            <button id="noBtn" onmouseover="runAway()">I'LL STAY LONELY</button>
+        </div>
+    </div>
+
+    <div id="finale">
+        <img src="divyanshu.jpg" class="pfp" alt="Divyanshu">
+        <h2 style="color: #00ff00; margin: 5px;">UPGRADE SUCCESS! ✅</h2>
+        <p style="font-size: 0.8rem;"><b>New Status:</b> Official Substitute GF</p>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 10px; text-align: left; font-size: 0.8rem;">
+            <b>VALENTINE DUTIES:</b>
+            <ul style="padding-left: 15px; margin: 5px 0;">
+                <li>Must provide Samosas on demand</li>
+                <li>Will listen to my GF rants</li>
+                <li>Accepted since I have a GF and you don't</li>
+            </ul>
+        </div>
+        
+        <p style="color: #ff00ff; font-weight: bold; margin-top: 15px;">HAPPY VALENTINE'S DAY, BRO! 😂</p>
+        <button onclick="location.reload()" style="background: #222; color: #888; font-size: 12px; padding: 5px;">Reset System</button>
+    </div>
+
+    <script>
+        let progress = 0;
+
+        function runAway() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            if(progress < 100) {
+                progress += 12.5;
+                document.getElementById('meterFill').style.width = progress + '%';
+                document.getElementById('status-text').innerText = "Escape is impossible. Converting...";
+            }
+        }
+
+        function startPrank() {
+            // Play Music
+            document.getElementById('bgMusic').play();
+            
+            // Switch Screens
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('finale').style.display = 'block';
+            
+            // Start Rain
+            setInterval(createRain, 200);
+        }
+
+        function createRain() {
+            const emojis = ['💖','👗','💅','🍕','💃'];
+            const e = document.createElement('div');
+            e.className = 'falling-emoji';
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.fontSize = Math.random() * 20 + 20 + 'px';
+            e.style.animationDuration = Math.random() * 2 + 2 + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Diagnostic: User 'Divyanshu'</title>
     <style>
         body {
